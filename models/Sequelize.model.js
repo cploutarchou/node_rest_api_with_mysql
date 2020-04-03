@@ -16,8 +16,8 @@ module.exports = (sequelize, Sequelize) => {
     published: {
       type: Sequelize.BOOLEAN
     },
-    valid: {
-      type: Sequelize.BOOLEAN
+    publisher_name: {
+      type: Sequelize.STRING
     }
   });
 };
