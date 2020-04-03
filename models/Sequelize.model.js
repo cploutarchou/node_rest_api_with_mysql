@@ -5,19 +5,19 @@
  * Date: 04/04/2020
  * Time: 00:01
  **/
-module.exports = (sequelize, Sequelize) => {
-  return sequelize.define("rest-api-tutorial", {
+module.exports = (db, Column) => {
+  return db.define("rest-api-tutorial", {
     title: {
-      type: Sequelize.STRING
+      type: Column.STRING
     },
     description: {
-      type: Sequelize.STRING
+      type: Column.STRING
     },
     published: {
-      type: Sequelize.BOOLEAN
+      type: Column.BOOLEAN
     },
     publisher_name: {
-      type: Sequelize.STRING
+      type: Column.STRING
     }
   });
 };
