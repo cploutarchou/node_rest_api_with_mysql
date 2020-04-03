@@ -7,7 +7,12 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: user
       MYSQL_ROOT_PASSWORD: pass
-      MYSQL_DATABASE: default_schema
+      MYSQL_DATABASE: restapi
+    volumes:
+      - ./init-mysql:/docker-entrypoint-initdb.d
+    restart: always
+    ports:
+      - 3306:3306
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     container_name: pma
