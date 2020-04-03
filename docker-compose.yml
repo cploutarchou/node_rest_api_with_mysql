@@ -15,7 +15,7 @@ services:
       - 3306:3306
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: pma
+    container_name: phpmyadmin
     links:
       - mysql
     environment:

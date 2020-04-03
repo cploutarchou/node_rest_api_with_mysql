@@ -7,7 +7,7 @@
  **/
 const dbConfig = require("../config/db.config");
 const Sequelize = require("sequelize");
-const sequelizeConfig = {
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
   operatorsAliases: false,
@@ -17,14 +17,17 @@ const sequelizeConfig = {
     acquire: dbConfig.pool.acquire,
     idle: dbConfig.pool.idle
   }
-};
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, { sequelizeConfig }
-);
+});
+// function to drop existing tables and re-sync database
 
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tutorial = require("models/Tutorial")(sequelize, Sequelize);
-
+db.dropRestApiTable = () => {
+  db.sequelize.sync({ force: true }).then(() => {
+    console.log("rest-api-tutorial table just dropped and db re-synced.");
+  });
+};
+db.tutorials = require("./Sequelize.model")(sequelize, Sequelize);
 module.exports = db;

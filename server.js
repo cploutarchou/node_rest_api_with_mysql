@@ -10,7 +10,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const server = express();
-
+const db = require("./models");
 const corsSettings = {
   originL: "http://localhost:80"
 };
@@ -29,3 +29,6 @@ const port = process.env.PORT || 8080;
 server.listen(port, () => {
   console.log(`Server running on port : ${port}`);
 });
+// Run following function if you want drop existing tables and re-sync database
+// db.dropRestApiTable();
+db.sequelize.sync();
