@@ -41,7 +41,7 @@ Learn more docker compose <a href="https://docs.docker.com/compose/overview/" ta
 </tr>
 </table>
 
-##If you need more information about phpmyadmin image.
+## If you need more information about phpmyadmin image.
 <a href="https://hub.docker.com/r/phpmyadmin/phpmyadmin/" target="_blank">READ HERE</a>
 
 ## If you need more information about mysql image.
