@@ -123,12 +123,41 @@ exports.deleteAll = (req, res) => {
 };
 
 // Get all published Tutorial
-
-exports.getAllPublished = (res, req) => {
-
+exports.getAllPublished = (res, _req) => {
+  tutorialObj.findAll({
+    where: { published: true }
+  }).then(data => {
+    res.send(data);
+  }).catch(err => {
+    res.status(500).send({
+      message: err.message || "Something going wrong. Unable to retrieve data!"
+    });
+  });
 };
+
 // Get all published Tutorial by Publisher Name
-
-exports.getAllPublisherName = (res, req) => {
-
+exports.getAllByPublisherName = (res, req) => {
+  // eslint-disable-next-line camelcase
+  const publisher_name = req.params.publisher_name;
+  // eslint-disable-next-line camelcase
+  const condition = publisher_name ? { publisher_name: { [Op.like]: `%${publisher_name}%` } } : null;
+  tutorialObj.findAll({
+    where: { publisher_name: condition }
+  }).then(num => {
+    if (num === 1) {
+      res.send({
+        message: "Tutorial object successfully updated."
+      });
+    } else {
+      res.send({
+        // eslint-disable-next-line camelcase
+        message: `Cannot update Tutorial object with Publisher Name = ${publisher_name}!`
+      });
+    }
+  }).catch(err => {
+    res.status(500).send({
+      // eslint-disable-next-line camelcase
+      message: err.message || `Error while updating Tutorial object with Publisher Name =${publisher_name}!`
+    });
+  });
 };
