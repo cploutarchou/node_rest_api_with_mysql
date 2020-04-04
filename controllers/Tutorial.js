@@ -106,9 +106,20 @@ exports.delete = (req, res) => {
   });
 };
 
-// Delete All Tutorial
+// Delete All Tutorials objects from database
 exports.deleteAll = (req, res) => {
-
+  tutorialObj.destroy({
+    where: {},
+    truncate: false
+  }).then(nums => {
+    res.send({
+      message: `${nums} Tutorial objects was deleted successfully!`
+    });
+  }).catch(err => {
+    res.status(500).send({
+      message: err.message || "Cannot delete Tutorials objects. Something going wrong}!"
+    });
+  });
 };
 
 // Get all published Tutorial
