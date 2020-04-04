@@ -21,7 +21,8 @@ exports.create = (req, res) => {
   const tutorial = {
     title: req.body.title,
     description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    published: req.body.published ? req.body.published : false,
+    publisher_name: req.body.publisher_name ? req.body.publisher_name : false
   };
   // Save Tutorial object to db
   Tutorial.create(tutorial).then(data => {
@@ -33,9 +34,19 @@ exports.create = (req, res) => {
   });
 };
 
-// Retrieve all Tutorial
+// Retrieve all Tutorial (Receive data with condition).
 exports.getAll = (req, res) => {
-
+  const title = req.query.title;
+  const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
+  Tutorial.getAll({
+    where: condition
+  }).then(data => {
+    res.send(data);
+  }).catch(err => {
+    res.status(500).send({
+      message: err.message || "Some error occurred while retrieving data."
+    });
+  });
 };
 // Get Tutorial by ID
 exports.getByID = (req, res) => {
@@ -54,7 +65,7 @@ exports.deleteAll = (req, res) => {
 
 };
 
-// Get all published Tutoria
+// Get all published Tutorial
 
 exports.getAllPublished = (res, req) => {
 
