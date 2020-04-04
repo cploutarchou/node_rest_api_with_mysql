@@ -70,7 +70,7 @@ exports.update = (req, res) => {
   }).then(num => {
     if (num === 1) {
       res.send({
-        message: "Tutorial object succefully updated."
+        message: "Tutorial object successfully updated."
       });
     } else {
       res.send({
@@ -83,10 +83,29 @@ exports.update = (req, res) => {
     });
   });
 };
-// Delete Tutorial by ID
-exports.delete = (req, res) => {
 
+// Delete Tutorial object by ID
+exports.delete = (req, res) => {
+  const id = req.params.id;
+  tutorialObj.destroy({
+    where: { id: id }
+  }).then(num => {
+    if (num === 1) {
+      res.send({
+        message: "Tutorial object successfully deleted."
+      });
+    } else {
+      res.send({
+        message: `Cannot delete Tutorial object with id=${id}!`
+      });
+    }
+  }).catch(err => {
+    res.status(500).send({
+      message: err.message || `Cannot delete Tutorial object with id=${id}!`
+    });
+  });
 };
+
 // Delete All Tutorial
 exports.deleteAll = (req, res) => {
 
@@ -95,5 +114,10 @@ exports.deleteAll = (req, res) => {
 // Get all published Tutorial
 
 exports.getAllPublished = (res, req) => {
+
+};
+// Get all published Tutorial by Publisher Name
+
+exports.getAllPublisherName = (res, req) => {
 
 };
