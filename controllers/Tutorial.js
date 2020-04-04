@@ -12,7 +12,25 @@ const Op = db.Sequelize.Op;
 
 // Create and save new Tutorial
 exports.create = (req, res) => {
-
+  if (!req.body.title) {
+    res.status(400).send({
+      message: "Content cannot be empty"
+    });
+  }
+  // Create a Tutorial object
+  const tutorial = {
+    title: req.body.title,
+    description: req.body.description,
+    published: req.body.published ? req.body.published : false
+  };
+  // Save Tutorial object to db
+  Tutorial.create(tutorial).then(data => {
+    res.send(data);
+  }).catch(err => {
+    res.status(500).send({
+      message: err.message || "Some error occurred while saving."
+    });
+  });
 };
 
 // Retrieve all Tutorial
