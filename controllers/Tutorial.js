@@ -63,7 +63,7 @@ exports.getByID = (req, res) => {
   });
 };
 // Update a Tutorial object by the id
-exports.update = (req, res) => {
+exports.updateByID = (req, res) => {
   const id = req.params.id;
   tutorialObj.update(req.body, {
     where: { id: id }
@@ -85,7 +85,7 @@ exports.update = (req, res) => {
 };
 
 // Delete Tutorial object by ID
-exports.delete = (req, res) => {
+exports.deleteByID = (req, res) => {
   const id = req.params.id;
   tutorialObj.destroy({
     where: { id: id }

@@ -11,6 +11,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const server = express();
 const db = require("./models");
+const { appRoutes } = require("./routes/routes");
 const corsSettings = {
   originL: "http://localhost:80"
 };
@@ -26,6 +27,7 @@ server.get("/", (_req, res) => {
 });
 // set listening ports for request
 const port = process.env.PORT || 8080;
+appRoutes();
 server.listen(port, () => {
   console.log(`Server running on port : ${port}`);
 });
