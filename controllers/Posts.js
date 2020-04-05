@@ -7,7 +7,7 @@
  **/
 
 const db = require("../models");
-const tutorialObj = db.tutorial;
+const postObj = db.tutorial;
 const Op = db.Sequelize.Op;
 
 // Create and save new Tutorial
@@ -19,7 +19,7 @@ exports.create = (request, result) => {
   }
 
   // Create a Tutorial object
-  const tutorial = {
+  const post = {
     title: request.body.title,
     description: request.body.description,
     published: request.body.published ? request.body.published : false,
@@ -27,7 +27,7 @@ exports.create = (request, result) => {
   };
 
   // Save Tutorial object to db
-  tutorialObj.create(tutorial).then(data => {
+  postObj.create(post).then(data => {
     result.send(data);
   }).catch(err => {
     result.status(500).send({
@@ -37,8 +37,8 @@ exports.create = (request, result) => {
 };
 
 // Retrieve all Tutorial (Receive data with condition).
-exports.getAll = (request, result) => {
-  tutorialObj.findAll()
+exports.getAllPosts = (request, result) => {
+  postObj.findAll()
     .then(data => {
       result.send(data);
     }).catch(err => {
@@ -49,11 +49,11 @@ exports.getAll = (request, result) => {
 };
 
 // Get Tutorial object by ID
-exports.getByID = (request, result) => {
+exports.getPostByID = (request, result) => {
   const paramID = request.params.id;
   console.log(paramID);
   console.log(paramID);
-  tutorialObj.findAll({
+  postObj.findAll({
     where: { id: paramID }
   }).then(data => {
     result.send(data);
@@ -64,9 +64,9 @@ exports.getByID = (request, result) => {
   });
 };
 // Update a Tutorial object by the id
-exports.updateByID = (request, result) => {
+exports.updatePostByID = (request, result) => {
   const id = request.params.id;
-  tutorialObj.update(request.body, {
+  postObj.update(request.body, {
     where: { id: id }
   }).then(num => {
     if (num === 1) {
@@ -86,9 +86,9 @@ exports.updateByID = (request, result) => {
 };
 
 // Delete Tutorial object by ID
-exports.deleteByID = (request, result) => {
+exports.deletePostByID = (request, result) => {
   const id = request.params.id;
-  tutorialObj.destroy({
+  postObj.destroy({
     where: { id: id }
   }).then(num => {
     if (num === 1) {
@@ -108,8 +108,8 @@ exports.deleteByID = (request, result) => {
 };
 
 // Delete All Tutorials objects from database
-exports.deleteAll = (request, result) => {
-  tutorialObj.destroy({
+exports.deleteAllPosts = (request, result) => {
+  postObj.destroy({
     where: {},
     truncate: false
   }).then(nums => {
@@ -124,8 +124,8 @@ exports.deleteAll = (request, result) => {
 };
 
 // Get all published Tutorial
-exports.getAllPublished = (request, result) => {
-  tutorialObj.findAll({
+exports.getAllPublishedPosts = (request, result) => {
+  postObj.findAll({
     where: { published: true }
   }).then(data => {
     result.send(data);
@@ -137,10 +137,26 @@ exports.getAllPublished = (request, result) => {
 };
 
 // Get all published Tutorial by Publisher Name
-exports.getAllByPublisherName = (request, result) => {
+exports.getAllPostsByPublisherName = (request, result) => {
   const publisher = request.params.publisher;
-  tutorialObj.findAll({
+  postObj.findAll({
     where: { publisher: { [Op.like]: `%${publisher}%` } }
+  }).then(data => {
+    result.send(data);
+  }).catch(err => {
+    result.status(500).send({
+      message: err.message || "Something going wrong. Unable to retrieve data!"
+    });
+  });
+};
+// Get all published post by Title
+exports.getPostByTitle = (request, result) => {
+  const title = request.query.title;
+  postObj.findAll({
+    where: {
+      publisher: { [Op.like]: `%${title}%` },
+      published: true
+    }
   }).then(data => {
     result.send(data);
   }).catch(err => {
