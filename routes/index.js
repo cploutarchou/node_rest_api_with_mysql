@@ -9,7 +9,7 @@
 const tutorial = require("../controllers/Tutorial");
 const express = require("express");
 const router = express.Router();
-
+// TODO Fix Create Tutorials
 // Create New Tutorial
 // router.post("/", tutorial.create);
 // // Retrieve all Tutorials
@@ -23,8 +23,8 @@ router.get("/api/id/:id", tutorial.getByID);
 // // Update Tutorial by ID
 // router.put("/", tutorial.updateByID);
 // // Delete Tutorial by ID
-// router.delete("/", tutorial.deleteByID);
-// // Delete all Tutorials
-// router.delete("/", tutorial.deleteAll);
+router.get("/api/delete/:id", tutorial.deleteByID);
+// Delete all Tutorials
+router.get("/api/deleteAll", tutorial.deleteAll);
 
 module.exports = router;
