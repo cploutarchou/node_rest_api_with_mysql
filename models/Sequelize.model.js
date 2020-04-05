@@ -11,12 +11,12 @@ module.exports = (database, Sequelize) => {
       type: Sequelize.STRING
     },
     description: {
-      type: Sequelize.STRING
+      type: Sequelize.TEXT
     },
     published: {
       type: Sequelize.BOOLEAN
     },
-    publisher_name: {
+    publisher: {
       type: Sequelize.STRING
     }
   });

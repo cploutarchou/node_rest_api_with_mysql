@@ -25,7 +25,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 server.get("/", (_req, res) => {
   res.json({ message: "Welcome to node.js rest api application. Created for learning purposes by Christos Ploutarchou" });
 });
-server.use("/", tutorial.getAll);
+server.use("/", tutorial.getByID);
 // set listening ports for request
 const port = process.env.PORT || 8080;
 

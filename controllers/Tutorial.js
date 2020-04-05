@@ -54,12 +54,15 @@ exports.getAll = (req, res) => {
 
 // Get Tutorial object by ID
 exports.getByID = (req, res) => {
-  const id = req.params.id;
-  tutorialObj.findByPk(id).then(data => {
+  const paramID = req.query.id;
+  console.log(paramID);
+  tutorialObj.findAll({
+    where: { id: paramID }
+  }).then(data => {
     res.send(data);
   }).catch(err => {
     res.status(500).send({
-      message: err.message || `Some error occurred while retrieving data with id : ${id}`
+      message: err.message || `Some error occurred while retrieving data with id : ${paramID}`
     });
   });
 };
