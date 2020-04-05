@@ -7,7 +7,7 @@
  **/
 
 const db = require("../models");
-const tutorialObj = db.tutorials;
+const tutorialObj = db.tutorial;
 const Op = db.Sequelize.Op;
 
 // Create and save new Tutorial
@@ -39,8 +39,9 @@ exports.create = (req, res) => {
 // Retrieve all Tutorial (Receive data with condition).
 exports.getAll = (req, res) => {
   const title = req.query.title;
+  console.log(title);
   const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-  tutorialObj.getAll({
+  tutorialObj.findAll({
     where: condition
   }).then(data => {
     res.send(data);

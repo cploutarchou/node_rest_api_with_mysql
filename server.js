@@ -11,9 +11,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const server = express();
 const db = require("./models");
-const { appRoutes } = require("./routes/routes");
+const tutorial = require("./controllers/Tutorial");
 const corsSettings = {
-  originL: "http://localhost:80"
+  originL: "http://localhost:8081"
 };
 
 server.use(cors(corsSettings));
@@ -25,12 +25,13 @@ server.use(bodyParser.urlencoded({ extended: true }));
 server.get("/", (_req, res) => {
   res.json({ message: "Welcome to node.js rest api application. Created for learning purposes by Christos Ploutarchou" });
 });
+server.use("/", tutorial.getAll);
 // set listening ports for request
 const port = process.env.PORT || 8080;
-appRoutes();
+
 server.listen(port, () => {
   console.log(`Server running on port : ${port}`);
 });
 // Run following function if you want drop existing tables and re-sync database
 // db.dropRestApiTable();
-db.sequelize.sync();
+db.databaseConf.sync();

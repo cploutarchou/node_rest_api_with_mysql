@@ -7,7 +7,7 @@
  **/
 const dbConfig = require("../config/db.config");
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+const database = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
   operatorsAliases: false,
@@ -22,12 +22,12 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 
 const db = {};
 db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+db.databaseConf = database;
 
 db.dropRestApiTable = () => {
-  db.sequelize.sync({ force: true }).then(() => {
+  db.databaseConf.sync({ force: true }).then(() => {
     console.log("rest-api-tutorial table just dropped and db re-synced.");
   });
 };
-db.tutorials = require("./Sequelize.model")(sequelize, Sequelize);
+db.tutorial = require("./Sequelize.model")(database, Sequelize);
 module.exports = db;
