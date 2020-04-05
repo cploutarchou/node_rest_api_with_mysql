@@ -6,23 +6,23 @@
  * Time: 01:45
  **/
 
-const tutorial = require("../controllers/Tutorial");
+const tutorial = require("../controllers/Posts");
 const express = require("express");
 const router = express.Router();
 // Create New Tutorial
-router.post("/api/create", tutorial.create);
+router.post("/api/posts/create", tutorial.create);
 // // Retrieve all Tutorials
-router.get("/api/tutorials", tutorial.getAll);
+router.get("/api/posts/all", tutorial.getAllPosts);
 // Retrieve all Published Tutorials
-router.get("/api/published", tutorial.getAllPublished);
+router.get("/api/posts/published", tutorial.getAllPublishedPosts);
 // Retrieve all Published Tutorials by Publisher Name
-router.get("/api/publisher/:publisher", tutorial.getAllByPublisherName);
+router.get("/api/post/publisher/:publisher", tutorial.getAllPostsByPublisherName);
 // Retrieve Tutorial by ID
-router.get("/api/id/:id", tutorial.getByID);
+router.get("/api/posts/id/:id", tutorial.getPostByID);
 // // Update Tutorial by ID
-router.put("/api/update/:id", tutorial.updateByID);
+router.put("/api/post/update/:id", tutorial.updatePostByID);
 // // Delete Tutorial by ID
-router.get("/api/delete/:id", tutorial.deleteByID);
+router.get("/api/post/delete/:id", tutorial.deletePostByID);
 // Delete all Tutorials
-router.get("/api/deleteAll", tutorial.deleteAll);
+router.get("/api/posts/deleteAll", tutorial.deleteAllPosts);
 module.exports = router;
