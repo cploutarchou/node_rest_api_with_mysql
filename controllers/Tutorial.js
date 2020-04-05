@@ -23,7 +23,7 @@ exports.create = (req, res) => {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false,
-    publisher_name: req.body.publisher_name ? req.body.publisher_name : false
+    publisher: req.body.publisher_name ? req.body.publisher_name : false
   };
 
   // Save Tutorial object to db
@@ -38,23 +38,20 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorial (Receive data with condition).
 exports.getAll = (req, res) => {
-  const title = req.query.title;
-  console.log(title);
-  const condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-  tutorialObj.findAll({
-    where: condition
-  }).then(data => {
-    res.send(data);
-  }).catch(err => {
-    res.status(500).send({
-      message: err.message || "Some error occurred while retrieving data."
+  tutorialObj.findAll()
+    .then(data => {
+      res.send(data);
+    }).catch(err => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving data."
+      });
     });
-  });
 };
 
 // Get Tutorial object by ID
 exports.getByID = (req, res) => {
-  const paramID = req.query.id;
+  const paramID = req.params.id;
+  console.log(paramID);
   console.log(paramID);
   tutorialObj.findAll({
     where: { id: paramID }
@@ -127,7 +124,7 @@ exports.deleteAll = (req, res) => {
 };
 
 // Get all published Tutorial
-exports.getAllPublished = (res, _req) => {
+exports.getAllPublished = (req, res) => {
   tutorialObj.findAll({
     where: { published: true }
   }).then(data => {
