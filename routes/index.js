@@ -16,8 +16,8 @@ const router = express.Router();
 router.get("/api/tutorials", tutorial.getAll);
 // Retrieve all Published Tutorials
 router.get("/api/published", tutorial.getAllPublished);
-// // Retrieve all Published Tutorials by Publisher Name
-// router.get("/", tutorial.getAllByPublisherName);
+// Retrieve all Published Tutorials by Publisher Name
+router.get("/api/publisher/:publisher", tutorial.getAllByPublisherName);
 // Retrieve Tutorial by ID
 router.get("/api/id/:id", tutorial.getByID);
 // // Update Tutorial by ID

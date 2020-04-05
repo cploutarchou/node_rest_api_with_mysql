@@ -23,7 +23,7 @@ exports.create = (req, res) => {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published ? req.body.published : false,
-    publisher: req.body.publisher_name ? req.body.publisher_name : false
+    publisher: req.body.publisher ? req.body.publisher : false
   };
 
   // Save Tutorial object to db
@@ -137,28 +137,15 @@ exports.getAllPublished = (req, res) => {
 };
 
 // Get all published Tutorial by Publisher Name
-exports.getAllByPublisherName = (res, req) => {
-  // eslint-disable-next-line camelcase
-  const publisher_name = req.params.publisher_name;
-  // eslint-disable-next-line camelcase
-  const condition = publisher_name ? { publisher_name: { [Op.like]: `%${publisher_name}%` } } : null;
+exports.getAllByPublisherName = (req, res) => {
+  const publisher = req.params.publisher;
   tutorialObj.findAll({
-    where: { publisher_name: condition }
-  }).then(num => {
-    if (num === 1) {
-      res.send({
-        message: "Tutorial object successfully updated."
-      });
-    } else {
-      res.send({
-        // eslint-disable-next-line camelcase
-        message: `Cannot update Tutorial object with Publisher Name = ${publisher_name}!`
-      });
-    }
+    where: { publisher: { [Op.like]: `%${publisher}%` } }
+  }).then(data => {
+    res.send(data);
   }).catch(err => {
     res.status(500).send({
-      // eslint-disable-next-line camelcase
-      message: err.message || `Error while updating Tutorial object with Publisher Name =${publisher_name}!`
+      message: err.message || "Something going wrong. Unable to retrieve data!"
     });
   });
 };
