@@ -5,7 +5,7 @@ services:
     container_name: mysql_server
     environment:
       MYSQL_USER: user
-      MYSQL_PASSWORD: user
+      MYSQL_PASSWORD: pass
       MYSQL_ROOT_PASSWORD: pass
       MYSQL_DATABASE: restapi
     volumes:

@@ -7,7 +7,7 @@ Learn more docker compose <a href="https://docs.docker.com/compose/overview/" ta
 
 1. Install Docker (Learn more about docker installation <a href="https://docs.docker.com/install/" target="_blank">here</a>)
 
-2. Enter on project root directory 
+2. Enter on the project root directory 
 
 3.  Up the compose
 ```
@@ -17,8 +17,8 @@ Learn more docker compose <a href="https://docs.docker.com/compose/overview/" ta
 ```
     your_ip:8183
     Server: mysql
-    Username: root/user
-    Password: root/user
+    Username: root/root
+    Password: root/pass
 ```
 5. Access mysql on terminal
 ```
