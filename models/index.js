@@ -25,7 +25,7 @@ db.Sequelize = Sequelize;
 db.databaseConf = database;
 
 db.dropRestApiTable = () => {
-  db.databaseConf.sync({ force: true }).then(() => {
+  db.databaseConf.sync({ force: false }).then(() => {
     console.log("restTutorial table just dropped and db re-synced.");
   });
 };

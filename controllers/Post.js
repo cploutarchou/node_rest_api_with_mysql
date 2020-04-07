@@ -140,7 +140,7 @@ exports.getAllPublishedPosts = (request, result) => {
 exports.getAllPostsByPublisherName = (request, result) => {
   const publisher = request.params.publisher;
   postObj.findAll({
-    where: { publisher: { [Op.like]: `%${publisher}%` } }
+    where: { publisher: { [Op.like]: `%${publisher}%` }, published: true }
   }).then(data => {
     result.send(data);
   }).catch(err => {

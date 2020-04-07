@@ -21,10 +21,7 @@ server.use(cors(corsSettings));
 server.use(bodyParser.json());
 // parse requests of content-type -application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({ extended: true }));
-// create a simple route
-// server.get("/", (_req, res) => {
-//   res.json({ message: "Welcome to node.js rest api application. Created for learning purposes by Christos Ploutarchou" });
-// });
+
 server.use("/", api);
 // set listening ports for request
 const port = process.env.PORT || 80;
