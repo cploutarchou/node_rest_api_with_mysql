@@ -105,7 +105,7 @@ npm install express body-parser cors  sequelize mysql2 --save
 When installation finish package.json file should look like this:
 ```json
 {
-  "name": "node\_rest\_api\_with\_mysql",
+  "name": "node_rest_api_with_mysql",
   "version": "1.0.0",
   "description": "Node.js Rest Api with Express, Sequelize, MySQL & phpMyAdmin .",
   "main": "server.js",
@@ -114,9 +114,9 @@ When installation finish package.json file should look like this:
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cploutarchou/node\_rest\_api\_with\_mysql.git"
+    "url": "git+https://github.com/cploutarchou/node_rest_api_with_mysql.git"
   },
-  "keywords": \[
+  "keywords": [
     "node",
     "rest-api",
     "tutorial",
@@ -125,13 +125,13 @@ When installation finish package.json file should look like this:
     "docker",
     "node.js",
     "sequilize"
-  \],
+  ],
   "author": "Christos Ploutarchou",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/cploutarchou/node\_rest\_api\_with\_mysql/issues"
+    "url": "https://github.com/cploutarchou/node_rest_api_with_mysql/issues"
   },
-  "homepage": "https://github.com/cploutarchou/node\_rest\_api\_with\_mysql#readme",
+  "homepage": "https://github.com/cploutarchou/node_rest_api_with_mysql#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -140,9 +140,16 @@ When installation finish package.json file should look like this:
     "sequelize": "^5.21.5"
   },
   "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "nodemon": "^2.0.2"
   }
 }
+
 ```
 ### **Setup Express web server**
 
