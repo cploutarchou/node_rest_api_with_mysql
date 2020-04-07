@@ -103,7 +103,7 @@ Run the command:
 npm install express body-parser cors  sequelize mysql2 --save
 
 When installation finish package.json file should look like this:
-```json
+```package.json
 {
   "name": "node_rest_api_with_mysql",
   "version": "1.0.0",
