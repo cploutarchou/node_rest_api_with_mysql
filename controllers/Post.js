@@ -10,7 +10,7 @@ const db = require("../models");
 const postObj = db.posts;
 const Op = db.Sequelize.Op;
 
-// Create and save new Tutorial
+// Create and save new Post
 exports.create = (request, result) => {
   if (!request.body.title) {
     result.status(400).send({
@@ -18,7 +18,7 @@ exports.create = (request, result) => {
     });
   }
 
-  // Create a Tutorial object
+  // Create a Post object
   const post = {
     title: request.body.title,
     description: request.body.description,
@@ -26,7 +26,7 @@ exports.create = (request, result) => {
     publisher: request.body.publisher ? request.body.publisher : false
   };
 
-  // Save Tutorial object to db
+  // Save Post object to db
   postObj.create(post).then(data => {
     result.send(data);
   }).catch(err => {
@@ -36,7 +36,7 @@ exports.create = (request, result) => {
   });
 };
 
-// Retrieve all Tutorial (Receive data with condition).
+// Retrieve all Post (Receive data with condition).
 exports.getAllPosts = (request, result) => {
   postObj.findAll()
     .then(data => {
@@ -48,7 +48,7 @@ exports.getAllPosts = (request, result) => {
     });
 };
 
-// Get Tutorial object by ID
+// Get Post object by ID
 exports.getPostByID = (request, result) => {
   const paramID = request.params.id;
   console.log(paramID);
@@ -63,7 +63,7 @@ exports.getPostByID = (request, result) => {
     });
   });
 };
-// Update a Tutorial object by the id
+// Update a Post object by the id
 exports.updatePostByID = (request, result) => {
   const id = request.params.id;
   postObj.update(request.body, {
@@ -71,21 +71,21 @@ exports.updatePostByID = (request, result) => {
   }).then(num => {
     if (num === 1) {
       result.send({
-        message: "Tutorial object successfully updated."
+        message: "Post object successfully updated."
       });
     } else {
       result.send({
-        message: `Cannot update Tutorial object with id=${id}!`
+        message: `Cannot update Post object with id=${id}!`
       });
     }
   }).catch(err => {
     result.status(500).send({
-      message: err.message || `Error while updating Tutorial object with id=${id}!`
+      message: err.message || `Error while updating Post object with id=${id}!`
     });
   });
 };
 
-// Delete Tutorial object by ID
+// Delete Post object by ID
 exports.deletePostByID = (request, result) => {
   const id = request.params.id;
   postObj.destroy({
@@ -93,37 +93,37 @@ exports.deletePostByID = (request, result) => {
   }).then(num => {
     if (num === 1) {
       result.send({
-        message: "Tutorial object successfully deleted."
+        message: "Post object successfully deleted."
       });
     } else {
       result.send({
-        message: `Cannot delete Tutorial object with id=${id}!`
+        message: `Cannot delete Post object with id=${id}!`
       });
     }
   }).catch(err => {
     result.status(500).send({
-      message: err.message || `Cannot delete Tutorial object with id=${id}!`
+      message: err.message || `Cannot delete Post object with id=${id}!`
     });
   });
 };
 
-// Delete All Tutorials objects from database
+// Delete All Posts objects from database
 exports.deleteAllPosts = (request, result) => {
   postObj.destroy({
     where: {},
     truncate: false
   }).then(nums => {
     result.send({
-      message: `${nums} Tutorial objects was deleted successfully!`
+      message: `${nums} Post objects was deleted successfully!`
     });
   }).catch(err => {
     result.status(500).send({
-      message: err.message || "Cannot delete Tutorials objects. Something going wrong}!"
+      message: err.message || "Cannot delete Post objects. Something going wrong}!"
     });
   });
 };
 
-// Get all published Tutorial
+// Get all published Post
 exports.getAllPublishedPosts = (request, result) => {
   postObj.findAll({
     where: { published: true }
@@ -136,7 +136,7 @@ exports.getAllPublishedPosts = (request, result) => {
   });
 };
 
-// Get all published Tutorial by Publisher Name
+// Get all published Post by Publisher Name
 exports.getAllPostsByPublisherName = (request, result) => {
   const publisher = request.params.publisher;
   postObj.findAll({

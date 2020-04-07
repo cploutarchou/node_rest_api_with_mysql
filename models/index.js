@@ -26,7 +26,7 @@ db.databaseConf = database;
 
 db.dropRestApiTable = () => {
   db.databaseConf.sync({ force: true }).then(() => {
-    console.log("rest-api-tutorial table just dropped and db re-synced.");
+    console.log("restTutorial table just dropped and db re-synced.");
   });
 };
 db.posts = require("./Sequelize.model")(database, Sequelize);
