@@ -7,7 +7,7 @@
  **/
 
 const db = require("../models");
-const postObj = db.tutorial;
+const postObj = db.posts;
 const Op = db.Sequelize.Op;
 
 // Create and save new Tutorial

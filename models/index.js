@@ -29,5 +29,5 @@ db.dropRestApiTable = () => {
     console.log("rest-api-tutorial table just dropped and db re-synced.");
   });
 };
-db.tutorial = require("./Sequelize.model")(database, Sequelize);
+db.posts = require("./Sequelize.model")(database, Sequelize);
 module.exports = db;
