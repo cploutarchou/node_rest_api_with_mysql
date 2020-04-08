@@ -629,7 +629,7 @@ const port = process.env.PORT || 80;
 server.listen(port, () => {
   console.log(`Server running on port : ${port}`);
 });
-
+```
 **Note** : In development, you may need to drop existing tables and re-sync database. So let’s create a new function on models/index.js to apply that.
 
 Add following function on index.js
@@ -644,4 +644,3 @@ You can call that function on server.js file when you want drop existing table:
 ```javascript
 db.dropRestApiTable();
 ```
-You can download complete project via my GitHub repository [Click Here](https://github.com/cploutarchou/node_rest_api_with_mysql) . (Please leave a star if you like my project)
