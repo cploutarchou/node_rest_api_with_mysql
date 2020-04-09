@@ -18,14 +18,13 @@ const database = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     idle: dbConfig.pool.idle
   }
 });
-// function to drop existing tables and re-sync database
 
 const db = {};
 db.Sequelize = Sequelize;
 db.databaseConf = database;
-
+// function to drop existing tables and re-sync database
 db.dropRestApiTable = () => {
-  db.databaseConf.sync({ force: false }).then(() => {
+  db.databaseConf.sync({ force: true }).then(() => {
     console.log("restTutorial table just dropped and db re-synced.");
   });
 };
