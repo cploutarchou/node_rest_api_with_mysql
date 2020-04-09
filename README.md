@@ -14,22 +14,22 @@ We’ll be start to build a Node.js Rest API with Express, Sequelize & MySQL. He
 
 ### **Node.js Rest CRUD API overview**
 
-We will build Rest Apis that can create, retrieve, update, delete and find Tutorials by title.
+We will build Rest Apis that can create, retrieve, update, delete and find Posts by title.
 
-First, we start with an Express web server. Next, we add configuration for MySQL database, create `Tutorial` a model with Sequelize, write the controller. Then we define routes for handling all CRUD operations (including custom finder).
+First, we start with an Express web server. Next, we add configuration for MySQL database, create `Post` a model with Sequelize, write the controller. Then we define routes for handling all CRUD operations (including custom finder).
 
 The following table shows overview of the Rest APIs that will be exported
 | Methods | Urls | Actions |
 |--|--|--|
 | GET | api/posts/all | Get all Posts |
-| GET | api/posts/:id| Get Tutorial by `id` |
-| POST |api/posts/create| Create new Tutorial |
-| PUT |api/posts/update/:id| Update Tutorial by `id` |
-| DELETE |api/posts/delete/:id| Delete Tutorial by `id` |
-| DELETE |api/posts/deletealls| Delete all Tutorials| .
-| GET |api/posts/published| Get all published Tutorials| 
-| GET |api/posts?title=’test’| Get all Tutorials which title contains `'test'`| 
-| GET |api/posts?publisher=’christos’| Get All posts where publisher name is  `'christos'`| 
+| GET | api/posts/:id| Get post by `id` |
+| POST |api/posts/create| Create new post |
+| PUT |api/posts/update/:id| Update post by `id` |
+| DELETE |api/posts/delete/:id| Delete post by `id` |
+| DELETE |api/posts/deleteall| Delete all posts| .
+| GET |api/posts/published| Get all published posts| 
+| GET |api/posts?title=’test’| Get all posts which title contains `'test'`| 
+| GET |api/posts/publisher?name=’christos’| Get All posts where publisher name is  `'christos'`| 
 
 This is our project structure:
 
@@ -252,10 +252,17 @@ const database = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     idle: dbConfig.pool.idle
   }
 });
+
 const db = {};
 db.Sequelize = Sequelize;
 db.databaseConf = database;
-db.tutorial = require("./Sequelize.model")(database, Sequelize);
+// function to drop existing tables and re-sync database
+db.dropRestApiTable = () => {
+  db.databaseConf.sync({ force: true }).then(() => {
+    console.log("restTutorial table just dropped and db re-synced.");
+  });
+};
+db.posts = require("./Sequelize.model")(database, Sequelize);
 module.exports = db;
 ```
 Don’t forget to call `sync()` method in _server.js_:
@@ -317,7 +324,7 @@ module.exports = (database, Sequelize) => {
   });
 };
 ```
-This Sequelize Model represents **tutorials** table in MySQL database. These columns will be generated automatically: _id_, _title_, _description_, _published_, _createdAt_, _updatedAt_.
+This Sequelize Model represents **posts** table in MySQL database. These columns will be generated automatically: _id_, _title_, _description_, _published_, publisher, _createdAt_, _updatedAt_.
 
 After initializing Sequelize, we don’t need to write CRUD functions, Sequelize supports all of them:
 
@@ -563,35 +570,29 @@ exports.getAllPosts = (request, result) => {
 
 When a client sends request for an endpoint using HTTP request (GET, POST, PUT, DELETE), we need to determine how the server will reponse by setting up the routes.
 
-These are our routes:
-
-*   `/api/tutorials`: GET, POST, DELETE
-*   `/api/tutorials/:id`: GET, PUT, DELETE
-*   `/api/tutorials/published`: GET
-
 Let’s now create a a **index.js** file inside routes/ folder with content like this:
 ```javascript
-const tutorial = require("../controllers/Post");
+const post = require("../controllers/Post");
 const express = require("express");
 const router = express.Router();
-// Create New Tutorial
-router.post("/api/posts/create", tutorial.create);
-// // Retrieve all Tutorials
-router.get("/api/posts/all", tutorial.getAllPosts);
-// Retrieve all Published Tutorials
-router.get("/api/posts/published", tutorial.getAllPublishedPosts);
-// Retrieve all Published Tutorials by Publisher Name
-router.get("/api/posts", tutorial.getAllPostsByPublisherName);
+// Create New Post
+router.post("/api/posts/create", post.create);
+// // Retrieve all posts
+router.get("/api/posts/all", post.getAllPosts);
+// Retrieve all Published posts
+router.get("/api/posts/published", post.getAllPublishedPosts);
+// Retrieve all Published posts by Publisher Name
+router.get("/api/posts/publisher", post.getAllPostsByPublisherName);
 // Retrieve all posts by title
-router.get("/api/posts", tutorial.getPostByTitle);
-// Retrieve Tutorial by ID
-router.get("/api/posts/:id", tutorial.getPostByID);
-// // Update Tutorial by ID
-router.put("/api/post/update/:id", tutorial.updatePostByID);
-// // Delete Tutorial by ID
-router.get("/api/post/delete/:id", tutorial.deletePostByID);
-// Delete all Tutorials
-router.get("/api/posts/deleteAll", tutorial.deleteAllPosts);
+router.get("/api/posts", post.getPostByTitle);
+// Retrieve post by ID
+router.get("/api/posts/:id", post.getPostByID);
+// // Update post by ID
+router.put("/api/post/update/:id", post.updatePostByID);
+// // Delete post by ID
+router.delete("/api/post/delete/:id", post.deletePostByID);
+// Delete all posts
+router.delete("/api/posts/deleteAll", post.deleteAllPosts);
 
 module.exports = router;
 ```
