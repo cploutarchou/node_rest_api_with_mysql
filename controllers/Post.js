@@ -51,8 +51,6 @@ exports.getAllPosts = (request, result) => {
 // Get Post object by ID
 exports.getPostByID = (request, result) => {
   const paramID = request.params.id;
-  console.log(paramID);
-  console.log(paramID);
   postObj.findAll({
     where: { id: paramID }
   }).then(data => {
@@ -65,22 +63,25 @@ exports.getPostByID = (request, result) => {
 };
 // Update a Post object by the id
 exports.updatePostByID = (request, result) => {
-  const id = request.params.id;
+  const paramID = request.params.id;
+  console.log(paramID);
+  console.log(request.body);
   postObj.update(request.body, {
-    where: { id: id }
+    where: { id: paramID }
   }).then(num => {
-    if (num === 1) {
+    console.log(num[0]);
+    if (num[0] === 1) {
       result.send({
         message: "Post object successfully updated."
       });
     } else {
       result.send({
-        message: `Cannot update Post object with id=${id}!`
+        message: `Cannot update Post object with id=${paramID}!`
       });
     }
   }).catch(err => {
     result.status(500).send({
-      message: err.message || `Error while updating Post object with id=${id}!`
+      message: err.message || `Error while updating Post object with id=${paramID}!`
     });
   });
 };
@@ -138,10 +139,9 @@ exports.getAllPublishedPosts = (request, result) => {
 
 // Get all published Post by Publisher Name
 exports.getAllPostsByPublisherName = (request, result) => {
-  const publisher = request.params.publisher;
-  postObj.findAll({
-    where: { publisher: { [Op.like]: `%${publisher}%` }, published: true }
-  }).then(data => {
+  const name = request.params.name;
+  const condition = name ? { publisher: { [Op.like]: `%${name}%` } } : null;
+  postObj.findAll({ where: condition }).then(data => {
     result.send(data);
   }).catch(err => {
     result.status(500).send({
@@ -151,13 +151,11 @@ exports.getAllPostsByPublisherName = (request, result) => {
 };
 // Get all published post by Title
 exports.getPostByTitle = (request, result) => {
-  const title = request.query.title;
-  postObj.findAll({
-    where: {
-      publisher: { [Op.like]: `%${title}%` },
-      published: true
-    }
-  }).then(data => {
+  const paramTitle = request.query.title;
+  const condition = paramTitle ? { title: { [Op.like]: `%${paramTitle}%` } } : null;
+  console.log(condition);
+  postObj.findAll({ where: condition }
+  ).then(data => {
     result.send(data);
   }).catch(err => {
     result.status(500).send({
