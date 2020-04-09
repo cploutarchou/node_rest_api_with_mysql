@@ -4,7 +4,8 @@
   "description": "Node.js Rest Api with Express, Sequelize, MySQL & phpMyAdmin .",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node  server.js",
+    "nodemon": "nodemon server.js"
   },
   "repository": {
     "type": "git",
